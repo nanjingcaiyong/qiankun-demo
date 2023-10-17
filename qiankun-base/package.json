@@ -1,0 +1,28 @@
+{
+  "name": "qiankun-base",
+  "version": "0.0.1",
+  "dependencies": {
+    "qiankun": "^2.10.13",
+    "react": "^18.2.0"
+  },
+  "scripts": {
+    "dev": "cross-env PORT=8080 react-scripts start"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.28",
+    "@types/react-dom": "^18.2.13",
+    "react-dom": "^18.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "qiankun",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:base": "pnpm -C ./qiankun-base dev",
+    "dev:app1": "pnpm -C ./vue-webpack-app1 dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-typescript": "^7.23.2",
+    "@babel/register": "^7.22.15",
+    "@types/node": "^20.8.6",
+    "cross-env": "^7.0.3",
+    "react-scripts": "^5.0.1",
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
