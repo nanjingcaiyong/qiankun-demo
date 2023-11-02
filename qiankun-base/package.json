@@ -2,8 +2,11 @@
   "name": "qiankun-base",
   "version": "0.0.1",
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
+    "antd": "^5.10.3",
     "qiankun": "^2.10.13",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "react-router-dom": "^6.17.0"
   },
   "scripts": {
     "dev": "cross-env PORT=8080 react-scripts start"

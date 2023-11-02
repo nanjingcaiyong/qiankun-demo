@@ -1,5 +1,5 @@
 import './public-path.ts'
-import { createApp } from 'vue'
+import { createApp, reactive, toRefs } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './app.vue'
 
@@ -18,14 +18,29 @@ type EntityProps = {
 }
 
 function render (props?: EntityProps) {
-  const { container } = props || {}
+  let { container, getGlobalState, setGlobalState } = props  || {}
+  const state = getGlobalState()
+  const store = reactive(state)
+  props.onGlobalStateChange((val) => {
+    store.user = val.user
+  })
+
+  
+  // actions.onGlobalStateChange(state => {
+  //   store.count = state.count
+  // }, true)
+
   const router = createRouter({
     history: createWebHistory(
       window.__POWERED_BY_QIANKUN__ ? props?.route : '/'
     ),
     routes: []
   })
-  instance = createApp(App).use(router)
+  instance = createApp(App, {
+    getGlobalState, 
+    setGlobalState,
+    store
+  }).use(router)
   
   instance.mount(container ? container.querySelector("#app1") as Element : "#app1")
 }
@@ -40,7 +55,6 @@ export async function bootstrap() {
 }
 
 export async function mount(props: EntityProps) {
-  console.log(props)
   render(props)
 }
 
