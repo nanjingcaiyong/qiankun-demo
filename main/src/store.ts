@@ -1,20 +1,22 @@
 import { initGlobalState } from 'qiankun'
-import * as Vue from 'vue'
 
-// 父应用的初始state
-// Vue.observable是为了让initialState变成可响应：https://cn.vuejs.org/v2/api/#Vue-observable。
+// 初始化数据对象
 const initialState ={
   user: {
     name: 'zhangsan'
+  },
+  localtion: {
+    id: 1234,
+    station: '北京'
   }
 }
 
 const actions = initGlobalState(initialState)
 
+// 监听数据变化
 actions.onGlobalStateChange((newState, prev) => {
   // state: 变更后的状态; prev 变更前的状态
   console.log('main change', JSON.stringify(newState), JSON.stringify(prev))
-
   for (const key in newState) {
     initialState[key] = newState[key]
   }

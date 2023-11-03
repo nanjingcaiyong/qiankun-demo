@@ -1,5 +1,5 @@
 import './public-path.ts'
-import { createApp, reactive, toRefs } from 'vue'
+import { createApp, reactive,  toRefs, ref } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './app.vue'
 
@@ -17,30 +17,15 @@ type EntityProps = {
   }
 }
 
-function render (props?: EntityProps) {
-  let { container, getGlobalState, setGlobalState } = props  || {}
-  const state = getGlobalState()
-  const store = reactive(state)
-  props.onGlobalStateChange((val) => {
-    store.user = val.user
-  })
-
-  
-  // actions.onGlobalStateChange(state => {
-  //   store.count = state.count
-  // }, true)
-
+function render (container?: HTMLElement, props?: Record<string, any>) {
   const router = createRouter({
     history: createWebHistory(
       window.__POWERED_BY_QIANKUN__ ? props?.route : '/'
     ),
     routes: []
   })
-  instance = createApp(App, {
-    getGlobalState, 
-    setGlobalState,
-    store
-  }).use(router)
+  console.log('propps', props)
+  instance = createApp(App, props).use(router)
   
   instance.mount(container ? container.querySelector("#app1") as Element : "#app1")
 }
@@ -55,7 +40,18 @@ export async function bootstrap() {
 }
 
 export async function mount(props: EntityProps) {
-  render(props)
+  let { container, store } = props
+  const state = ref(store.getGlobalState())
+
+  props.onGlobalStateChange((val) => {
+    state.value = val
+    console.log('state.data', state.data)
+  })
+
+  render(container, {
+    ...store,
+    data: state
+  })
 }
 
 export async function unmount(props: EntityProps) {

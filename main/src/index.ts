@@ -12,7 +12,7 @@ const apps = [{
   activeRule: '/app1', // 必选，微应用的激活规则。
   props: {
     path: '/app1',
-    ...store
+    store
   }
 }]
 
