@@ -3,22 +3,15 @@
   <button @click="add">++1</button>
 </template>
 
-<script>
-import { ref, toRefs, reactive, computed } from 'vue'
-export default {
-  props: {
-    setGlobalState: Function,
-    data: Object
-  },
-  setup (props) {
-    const add = () => {
-      props.setGlobalState({user: {name: '卧槽'}})
-    }
-    return {
-      add,
-      ...toRefs(props)
-    }
+<script lang="ts" setup>
+import type { MicroAppStateActions } from 'qiankun'
 
-  }
+const props = withDefaults(defineProps<{
+  actions: MicroAppStateActions,
+  data: Record<string, any>
+}>(), {})
+
+const add = () => {
+  props.actions.setGlobalState({user: {name: '卧槽'}})
 }
 </script>

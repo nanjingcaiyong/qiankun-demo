@@ -1,7 +1,9 @@
 import './public-path.ts'
-import { createApp, reactive,  toRefs, ref } from 'vue'
+import { createApp, ref } from 'vue'
+import Store from './actions'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './app.vue'
+import type { MicroAppStateActions } from 'qiankun'
 
 let instance = null
 
@@ -14,7 +16,8 @@ type EntityProps = {
   setGlobalState: Function;
   singleSpa: {
     [key: string]: any
-  }
+  },
+  actions: MicroAppStateActions & {getGlobalState: (key?: string) => any}
 }
 
 function render (container?: HTMLElement, props?: Record<string, any>) {
@@ -24,7 +27,6 @@ function render (container?: HTMLElement, props?: Record<string, any>) {
     ),
     routes: []
   })
-  console.log('propps', props)
   instance = createApp(App, props).use(router)
   
   instance.mount(container ? container.querySelector("#app1") as Element : "#app1")
@@ -40,16 +42,16 @@ export async function bootstrap() {
 }
 
 export async function mount(props: EntityProps) {
-  let { container, store } = props
-  const state = ref(store.getGlobalState())
+  let { container, actions } = props
+  Store.setActions(actions)
+  const state = ref(actions.getGlobalState())
 
-  props.onGlobalStateChange((val) => {
+  Store.actions?.onGlobalStateChange((val) => {
     state.value = val
-    console.log('state.data', state.data)
   })
 
   render(container, {
-    ...store,
+    actions,
     data: state
   })
 }

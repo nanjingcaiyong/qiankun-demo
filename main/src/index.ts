@@ -1,7 +1,7 @@
 import App from './app.vue'
 import { createApp } from 'vue'
 import { registerMicroApps, start, setDefaultMountApp } from 'qiankun'
-import store from './store.ts'
+import actions from './store.ts'
 
 createApp(App).mount('#base')
 
@@ -12,7 +12,7 @@ const apps = [{
   activeRule: '/app1', // 必选，微应用的激活规则。
   props: {
     path: '/app1',
-    store
+    actions
   }
 }]
 

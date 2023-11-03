@@ -1,4 +1,4 @@
-import { initGlobalState } from 'qiankun'
+import { initGlobalState, MicroAppStateActions } from 'qiankun'
 
 // 初始化数据对象
 const initialState ={
@@ -11,7 +11,7 @@ const initialState ={
   }
 }
 
-const actions = initGlobalState(initialState)
+const actions = initGlobalState(initialState) as MicroAppStateActions & {getGlobalState: (key: string) => any}
 
 // 监听数据变化
 actions.onGlobalStateChange((newState, prev) => {
