@@ -1,4 +1,4 @@
-import './public-path.ts'
+import './public-path'
 import { createApp, ref } from 'vue'
 import Store from './actions'
 import { createRouter, createWebHistory } from 'vue-router'
