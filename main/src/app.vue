@@ -8,16 +8,31 @@
         :defaultOpenKeys="['1']"
         :defaultSelectedKeys="['0_2']"
         :style="{ width: '100%' }"
-        @menuItemClick="onClickMenuItem"
       >
-        <a-menu-item key="0_1">
-          <IconHome />
-          项目1
-        </a-menu-item>
-        <a-menu-item key="0_2">
-          <IconHome />
-          项目2
-        </a-menu-item>
+        <template  v-for="menu in menus" :key="`${menu.parentId}_${menu.id}`">
+          <a-menu-item 
+            v-if="menu.childrens.length === 0" 
+            :key="`${menu.parentId}_${menu.id}`"
+            @click="onClickMenuItem(menu)"
+          >
+            <IconHome />
+            {{ menu.menuName }}
+          </a-menu-item>
+          <a-sub-item 
+            :key="`sub_${menu.parentId}_${menu.id}`" 
+            v-else
+          >
+            {{ menu.menuName }}
+            <a-menu-item 
+              :key="`${menu.parentId}_${menu.id}_${subMenu.id}`" 
+              v-for="subMenu in menu.childrens"
+              @click="onClickMenuItem(subMenu)"
+            >
+              {{ subMenu.menuName }}
+            </a-menu-item>
+          </a-sub-item>
+        </template>
+   
       </a-menu>
     </a-layout-sider>
 
@@ -61,6 +76,44 @@ import actions from './store.ts'
 import { loadMicroApp } from 'qiankun'
 export default defineComponent({
   setup () {
+    const menus = [{
+      id: 1,
+      menuName: '项目1',
+      parentId: 0,
+      childrens: [{
+        id: 11,
+        menuName: '页面1',
+        menuPath: '/project1/page1',
+        parentId: 1
+      },{
+        id: 12,
+        menuName: '页面2',
+        menuPath: '/project1/page2',
+        parentId: 1
+      }]
+    }, {
+      id: 2,
+      menuName: '项目2',
+      parentId: 0,
+      childrens: [{
+        id: 21,
+        menuName: '页面1',
+        parentId: 2
+      },{
+        id: 22,
+        menuName: '页面2',
+        parentId: 2
+      }]
+    }]
+
+    const onClickMenuItem = (menuItem) => {
+      history.pushState({}, '', menuItem.menuPath)
+    }
+
+    return {
+      onClickMenuItem,
+      menus
+    }
     // loadMicroApp({
     //   name: 'app2',
     //   entry: '//localhost:8082',

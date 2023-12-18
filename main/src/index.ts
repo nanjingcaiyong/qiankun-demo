@@ -12,8 +12,8 @@ import {
 import actions from './store.ts'
 
 createApp(App)
-.use(ArcoVue)
-.mount('#base')
+  .use(ArcoVue)
+  .mount('#base')
 
 const apps = [{
   name: 'vue app1', // 必选，微应用的名称，微应用之间必须确保唯一。
@@ -28,7 +28,8 @@ const apps = [{
 
 
 registerMicroApps(apps)
-// setDefaultMountApp('/project1/page1')
+
+setDefaultMountApp('/project1/page1')
 
 
 start({ prefetch: true })
