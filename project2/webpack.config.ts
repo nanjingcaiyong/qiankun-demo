@@ -7,10 +7,10 @@ import path from 'node:path'
 const packageName = 'module-federation';
 
 const devServer: DevServerConfiguration = {
-  port: 8081,
+  port: 8082,
   headers: {
     'Access-Control-Allow-Origin': '*'
-  }
+  },
 };
 
 const config: Configuration = {

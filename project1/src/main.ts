@@ -4,6 +4,7 @@ import Store from './actions'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './app.vue'
 import type { MicroAppStateActions } from 'qiankun'
+import routes from './router'
 
 let instance = null
 
@@ -17,7 +18,7 @@ type EntityProps = {
   singleSpa: {
     [key: string]: any
   },
-  actions: MicroAppStateActions & {getGlobalState: (key?: string) => any}
+  getGlobalState: (key?: string) => any
 }
 
 function render (container?: HTMLElement, props?: Record<string, any>) {
@@ -25,14 +26,15 @@ function render (container?: HTMLElement, props?: Record<string, any>) {
     history: createWebHistory(
       window.__POWERED_BY_QIANKUN__ ? props?.route : '/'
     ),
-    routes: []
+    routes
   })
-  instance = createApp(App, props).use(router)
+  instance = createApp(App, props)
+    .use(router)
   
   instance.mount(container ? container.querySelector("#app1") as Element : "#app1")
 }
 
-// 独立运行时
+// app1 独立运行时
 if (!window.__POWERED_BY_QIANKUN__) {
   render();
 }
@@ -49,18 +51,27 @@ export async function bootstrap() {
  * 应用每次进入都会调用 mount 方法，通常我们在这里触发应用的渲染方法
  */
 export async function mount(props: EntityProps) {
-  let { container, actions } = props
-  Store.setActions(actions)
-  const state = ref(actions.getGlobalState())
+  let { container, route } = props
 
-  Store.actions?.onGlobalStateChange((val) => {
-    state.value = val
-  })
+  const state = ref(props.getGlobalState())
 
-  render(container, {
-    actions,
-    data: state
-  })
+
+  props.onGlobalStateChange((val, val2) => {
+    state.value = val;
+  }, true)
+
+  render(container, {...props, data: state});
+
+  // props.setGlobalState({
+  //   user: {
+  //     name: 'zhangsan',
+  //     age: 45
+  //   },
+  //   localtion: {
+  //     id: 1,
+  //     station: '南京'
+  //   }
+  // });
 }
 
 /**

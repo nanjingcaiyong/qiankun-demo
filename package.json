@@ -1,11 +1,12 @@
 {
-  "name": "qiankun",
+  "name": "qiankun-demo",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev:base": "pnpm -C ./main dev",
-    "dev:app1": "pnpm -C ./app1 dev",
+    "dev:app1": "pnpm -C ./project1 dev",
+    "dev:app2": "pnpm -C ./project2 dev",
     "dev": "npm-run-all --parallel dev:*"
   },
   "keywords": [],
@@ -28,6 +29,17 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "vue": "^3.3.4"
+    "@arco-design/web-vue": "^2.53.3",
+    "autoprefixer": "^10.4.16",
+    "css-loader": "^6.8.1",
+    "postcss": "^8.4.32",
+    "postcss-import": "^15.1.0",
+    "postcss-loader": "^7.3.3",
+    "postcss-url": "^10.1.3",
+    "scss-loader": "^0.0.1",
+    "style-loader": "^3.3.3",
+    "tailwindcss": "^3.2.7",
+    "vue": "^3.3.4",
+    "vue-style-loader": "^4.1.3"
   }
 }

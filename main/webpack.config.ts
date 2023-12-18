@@ -8,11 +8,12 @@ const config = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/' // ./是当前目录，/是根目录
   },
   devServer: {
-    port: 8080
+    port: 8080,
+    historyApiFallback: true
   },
-  
   module: {
     rules: [{
       test: /\.vue$/,
@@ -23,6 +24,14 @@ const config = {
       use: [{
         loader: 'babel-loader'
       }]
+    },
+    {
+      test: /\.css$/,
+      use: [
+        'style-loader',
+        'css-loader',
+        'postcss-loader'
+      ]
     }]
   },
   plugins: [

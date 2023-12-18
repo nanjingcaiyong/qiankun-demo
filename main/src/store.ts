@@ -3,11 +3,12 @@ import { initGlobalState, MicroAppStateActions } from 'qiankun'
 // 初始化数据对象
 const initialState ={
   user: {
-    name: 'zhangsan'
+    name: 'zhangsan',
+    age: 23
   },
   localtion: {
-    id: 1234,
-    station: '北京'
+    id: 1,
+    station: '南京'
   }
 }
 
@@ -15,8 +16,7 @@ const actions = initGlobalState(initialState) as MicroAppStateActions & {getGlob
 
 // 监听数据变化
 actions.onGlobalStateChange((newState, prev) => {
-  // state: 变更后的状态; prev 变更前的状态
-  console.log('main change', JSON.stringify(newState), JSON.stringify(prev))
+  console.log('基座监听到数据变化', newState, prev)
   for (const key in newState) {
     initialState[key] = newState[key]
   }
@@ -29,5 +29,8 @@ actions.getGlobalState = (key) => {
 
   return key ? initialState[key] : initialState
 }
+
+// actions.setGlobalState(initialState);
+// actions.offGlobalStateChange();
 
 export default actions
