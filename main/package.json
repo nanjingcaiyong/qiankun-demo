@@ -10,6 +10,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "qiankun": "^2.10.16"
+    "@babel/plugin-transform-typescript": "^7.22.15",
+    "qiankun": "^2.10.16",
+    "vue-router": "^4.2.5"
   }
 }

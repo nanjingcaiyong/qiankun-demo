@@ -3,6 +3,8 @@ import { createApp, ref } from 'vue'
 import Store from './actions'
 import App from './app.vue'
 import type { MicroAppStateActions } from 'qiankun'
+import { createRouter, createWebHistory } from 'vue-router'
+import routes from './router'
 
 
 type EntityProps = {
@@ -19,7 +21,15 @@ type EntityProps = {
 }
 
 function render (container?: HTMLElement, props?: Record<string, any>) {
+  debugger
+  const router = createRouter({
+    history: createWebHistory(
+      window.__POWERED_BY_QIANKUN__ ? props?.route : '/'
+    ),
+    routes
+  })
   createApp(App, props)
+    .use(router)
     .mount(container ? container.querySelector("#app2") as Element : "#app2")
 }
 
@@ -41,17 +51,15 @@ export async function bootstrap() {
  */
 export async function mount(props: EntityProps) {
   let { container, actions, route } = props
-  Store.setActions(actions)
-  const state = ref(actions.getGlobalState())
-  Store.actions?.onGlobalStateChange((val) => {
-    state.value = val
-  })
+  const state = ref(props.getGlobalState())
 
-  render(container, {
-    actions,
-    data: state,
-    route
-  })
+
+  props.onGlobalStateChange((val, val2) => {
+    state.value = val;
+  }, true)
+  debugger
+  render(container, {...props, data: state});
+
 }
 
 /**

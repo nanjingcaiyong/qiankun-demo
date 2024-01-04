@@ -28,10 +28,9 @@ function render (container?: HTMLElement, props?: Record<string, any>) {
     ),
     routes
   })
-  instance = createApp(App, props)
+  createApp(App, props)
     .use(router)
-  
-  instance.mount(container ? container.querySelector("#app1") as Element : "#app1")
+    .mount(container ? container.querySelector("#app1") as Element : "#app1")
 }
 
 // app1 独立运行时

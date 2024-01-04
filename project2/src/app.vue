@@ -1,4 +1,8 @@
 <template>
+  <div>
+    <router-view></router-view>
+  </div>
+  <h2>this is project2</h2>
   <p>
     <label>姓名：</label>
     <span>{{ user.name }}</span>
